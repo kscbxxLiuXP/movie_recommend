@@ -1,0 +1,23 @@
+.GuessLike-Title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.GuessLike-button {
+
+   
+    padding:0 30px;
+    line-height: 60px;
+    text-align: center;
+    position: relative;
+    appearance: none;
+    background: #f72359;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    outline: none;
+    overflow: hidden;
+    border-radius: 100px;
+  }
