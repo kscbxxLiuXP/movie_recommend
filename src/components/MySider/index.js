@@ -161,7 +161,7 @@ class MySider extends Component {
                             })}
                         </>
                     </div>
-                    <div style={{ textAlign: 'center', marginTop: 10 }}>Copyright ©2021 <br />MovieRecommender</div>
+                    <div style={{ textAlign: 'center', marginTop: 10, }}>Copyright ©2021 <br /><span style={{fontWeight:'bold'}}>MovieRecommender</span></div>
                 </Affix>
             </div>
         )

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Button } from 'antd'
 import './style.css'
-
-export default class MovieBoard extends Component {
+import whiteback from  '../../../assets/img/whiteback.jpg'
+import { withRouter } from 'react-router'
+ class MovieBoard extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -21,20 +22,21 @@ export default class MovieBoard extends Component {
 
                 <div className="Home-MovieBoard-ListWrapper">
                     {this.props.movieList.map((item, index) => {
-                        return <div className="Home-MovieBoard-ItemWrapper" key={index}>
+                        return <div className="Home-MovieBoard-ItemWrapper" key={index}  onClick={() => { this.props.history.push('/movie/'+item.id) }}>
                             <img className="Home-MovieBoard-ItemImage" alt={item.name} width={"100px"} src={item.image_url} />
                             <div className="Home-MovieBoard-ItemRating">
                                 {/* <div className="Home-MovieBoard-ItemRating-back"></div> */}
                                 <div className="Home-MovieBoard-ItemRating-name">{item.name}</div>
                                 <div className="Home-MovieBoard-ItemRating-rate"> {item.rate}</div>
                             </div>
-
                         </div>
                     })}
-                    <div className="Home-MovieBoard-ItemWrapper" >
-                        <Button onClick={() => { this.props.history.push(this.props.url) }}>下一页</Button>
+                    <div className="Home-MovieBoard-ItemWrapper" onClick={() => { this.props.history.push(this.props.url) }}>
+                      
+                        <img className="Home-MovieBoard-ItemImage" alt="blank" width={"100px"} src={whiteback} />
                         <div className="Home-MovieBoard-ItemRating">
-
+                            <div>查看</div>
+                            <div>更多</div>
                         </div>
                     </div >
                 </div>
@@ -43,3 +45,5 @@ export default class MovieBoard extends Component {
         )
     }
 }
+
+export default withRouter(MovieBoard)
