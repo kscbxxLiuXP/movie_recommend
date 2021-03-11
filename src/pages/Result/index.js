@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MovieList from '../../components/MovieList'
-import { Collapse,Checkbox, Row, Col } from "antd";
+import { Collapse,Checkbox, Row, Col, Radio } from "antd";
 const { Panel } = Collapse;
 
 export default class Result extends Component {
@@ -40,6 +40,7 @@ export default class Result extends Component {
 
     
     onChangeCategoory = (checkedValues) => {
+        console.log(checkedValues.target.style.value);
         this.setState({category:checkedValues, },() => {
             console.log('category = ' + this.state.category);
             console.log('year = ' + this.state.year);
@@ -62,31 +63,31 @@ export default class Result extends Component {
                 <Collapse style={{margin:30}} >
                     <Panel header="筛选" key="1">
                         <p>
-                        <Checkbox.Group style={{ width: '100%' }} onChange={this.onChangeCategoory}> 类别
+                        <Radio.Group style={{ width: '100%' }} onChange={this.onChangeCategoory}> 类别
                             <Row>
                                 <Col span={6}>
-                                    <Checkbox value="A">惊悚</Checkbox>
+                                    <Radio value="A">惊悚</Radio>
                                 </Col>
                                 <Col span={6}>
-                                    <Checkbox value="B">喜剧</Checkbox>
+                                    <Radio value="B">喜剧</Radio>
                                 </Col>
                                 <Col span={6}>
-                                    <Checkbox value="C">科幻</Checkbox>
+                                    <Radio value="C">科幻</Radio>
                                 </Col>
                                 <Col span={6}>
-                                    <Checkbox value="D">犯罪</Checkbox>
+                                    <Radio value="D">犯罪</Radio>
                                 </Col>
                                 <Col span={6}>
-                                    <Checkbox value="E">悬疑</Checkbox>
+                                    <Radio value="E">悬疑</Radio>
                                 </Col>
                                 <Col span={6}>
-                                    <Checkbox value='F'>动画</Checkbox>
+                                    <Radio value='F'>动画</Radio>
                                 </Col>
                                 <Col span={6}>
-                                    <Checkbox value='G'>儿童</Checkbox>
+                                    <Radio value='G'>儿童</Radio>
                                 </Col>
                             </Row>
-                        </Checkbox.Group>
+                        </Radio.Group>
 
                         <Checkbox.Group style={{ width: '100%' }} onChange={this.onChangeYear}> 年代
                             <Row>
