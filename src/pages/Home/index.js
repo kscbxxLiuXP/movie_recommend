@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Button, BackTop, Affix } from 'antd'
+import { Card, Row, Col, Button, BackTop, Affix, Table, Space } from 'antd'
 
 import GuessLike from './GuessLike'
 import MovieBoard from './MovieBoard'
@@ -69,11 +69,44 @@ export default class Home extends Component {
                         <div style={{ marginLeft: 10, marginTop: 20 }}>
                             <Affix offsetTop={80}>
                                 <Card title="热播榜">
+
+                                    <Table pagination={false} dataSource={this.movieList}>
+
+                                        <column
+                                            key="action"
+                                            render={(text, record, index) => (
+                                                <Space size="middle">
+                                                    <div>{index + 1}</div>
+                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.id) }}>{record.name}</Button>
+                                                </Space>
+                                            )}
+                                        />
+                                    </Table>
+
                                     <Button onClick={() => { this.props.history.push("/top-popular") }}>
                                         更多
-                            </Button>
+                                </Button>
+
                                 </Card>
-                                <Card title="评分榜">
+                                <Card>
+
+
+
+                                    <Table pagination={false} dataSource={this.movieList}>
+                                        <column
+                                            title="评分榜"
+                                            key="action"
+                                            render={(text, record, index) => (
+                                                <Space size="middle">
+                                                    <div>{index + 1}</div>
+                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.id) }}>{record.name}</Button>
+                                                </Space>
+                                            )}
+                                        />
+
+                                    </Table>
+
+
                                     <Button onClick={() => { this.props.history.push("/top-rating") }}>
                                         更多
                             </Button>

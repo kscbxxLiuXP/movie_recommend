@@ -153,7 +153,7 @@ class MyHeader extends Component {
                                 <Input style={{ width: 400, height: 40, paddingLeft: 20, borderRadius: 30 }} placeholder="请输入你要搜索的电影"
                                     suffix={
 
-                                        <div className='header-search-button'>
+                                        <div className='header-search-button' onClick={() => { this.props.history.push('/result/1')}}>
                                             <SearchOutlined />
                                         </div>
 

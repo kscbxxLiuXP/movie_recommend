@@ -1,0 +1,13 @@
+.text-center{
+    width: 700px;
+    text-align:center;
+}
+
+.item-center{
+    width: 600px;
+}
+
+.margin{
+    margin-left:30px;
+    margin-top: 10px;
+}
