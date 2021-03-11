@@ -1,0 +1,14 @@
+.register-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.register-title{
+    margin-top: 40px;
+    font-size: 28px;
+    font-weight: bold;
+}

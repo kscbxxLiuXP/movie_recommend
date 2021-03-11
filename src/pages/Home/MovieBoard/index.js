@@ -17,7 +17,7 @@ import { withRouter } from 'react-router'
                     {this.props.title}
                 </div>
                 <div className="Home-MovieBoard-SubTitle">
-                    电影
+                    {this.props.subtitle?null:"电影"}
                 </div>
 
                 <div className="Home-MovieBoard-ListWrapper">
@@ -25,7 +25,7 @@ import { withRouter } from 'react-router'
                         return <div className="Home-MovieBoard-ItemWrapper" key={index}  onClick={() => { this.props.history.push('/movie/'+item.id) }}>
                             <img className="Home-MovieBoard-ItemImage" alt={item.name} width={"100px"} src={item.image_url} />
                             <div className="Home-MovieBoard-ItemRating">
-                                {/* <div className="Home-MovieBoard-ItemRating-back"></div> */}
+                            
                                 <div className="Home-MovieBoard-ItemRating-name">{item.name}</div>
                                 <div className="Home-MovieBoard-ItemRating-rate"> {item.rate}</div>
                             </div>

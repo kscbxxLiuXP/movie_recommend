@@ -60,3 +60,19 @@ margin-right: 10px;
 font-size: 16px;
 color: #54728b;
 }
+.movie-display-button{
+    margin-top: 30px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    padding:5px 20px;
+    cursor: pointer;
+    transition: background 300ms;
+    transition: all 250ms cubic-bezier(.02, .01, .47, 1);
+}
+.movie-display-button:hover{
+    background-color: black;
+    color: white;
+    transform: translate(0,-2px);
+    transition-delay: 0s !important;
+}

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@brainhubeu/react-carousel": "^1.19.26",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
@@ -12,6 +13,7 @@
     "react-headroom": "^3.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "video-react": "^0.14.1",
     "web-vitals": "^1.1.0"
   },
   "scripts": {

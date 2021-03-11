@@ -1,0 +1,101 @@
+.Movie-Play-column {
+
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+
+
+}
+
+.movie-play-wrapper {
+
+
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+.movie-play-container {
+
+
+
+
+    height: 730px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+
+}
+
+.movie-same-recommend {
+
+    color: white;
+    font-size: 20px;
+
+    width: 400px;
+}
+
+.movie-play-detail {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.movie-play-detail-title {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+}
+
+.movie-play-detail-rate {
+    margin-left: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ff5c38;
+}
+
+.movie-same-recommend-list {
+    padding: 20;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    overflow-y: auto;
+    max-height: 640px;
+}
+
+.movie-same-recommend-list-item {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: space-between;
+    transition: all 300ms ease-in;
+
+}
+
+.movie-same-recommend-list-item:hover {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+
+    cursor: pointer;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: coral;
+}
+
+.movie-same-recommend-list-item-name {
+    font-size: 18px;
+}
+
+.movie-same-recommend-list-item-time {
+
+    font-size: 14px;
+}
+
+.movie-same-recommend-list-item-rate {
+    margin-left: 10px;
+   
+    font-size: 12px;
+}

@@ -120,7 +120,7 @@ class MySider extends Component {
                 <div style={{ marginTop: 50, marginBottom: 60 }}>
                     <img src={homelogo} style={{ cursor: 'pointer' }} alt="homelogo" width={180} onClick={() => { this.props.history.push('/') }}></img>
                 </div>
-                <Affix offsetTop={70}>
+                <Affix offsetTop={80}>
                     <div >
                         <div style={{ width: 200, fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>分类</div>
                         <>
@@ -129,17 +129,19 @@ class MySider extends Component {
                                 return <div key={index} className={this.renderItemClassName(item.id)} onClick={() => {
                                     let timer
                                     //设置定时器
+                                    var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+                                    var ispeed = -osTop / 20;
                                     timer = setInterval(function () {
                                         //获取滚动条距离顶部高度
                                         var osTop = document.documentElement.scrollTop || document.body.scrollTop;
-                                        var ispeed = Math.floor(-osTop / 5);
+
 
                                         document.documentElement.scrollTop = document.body.scrollTop = osTop + ispeed;
                                         //到达顶部，清除定时器
                                         if (osTop === 0) {
                                             clearInterval(timer);
                                         };
-                                    }, 30);
+                                    }, 10);
                                     this.props.history.push('/genre/' + item.id);
 
                                 }}>
@@ -161,7 +163,7 @@ class MySider extends Component {
                             })}
                         </>
                     </div>
-                    <div style={{ textAlign: 'center', marginTop: 10, }}>Copyright ©2021 <br /><span style={{fontWeight:'bold'}}>MovieRecommender</span></div>
+                    <div style={{ textAlign: 'center', marginTop: 10, }}>Copyright ©2021 <br /><span style={{ fontWeight: 'bold' }}>MovieRecommender</span></div>
                 </Affix>
             </div>
         )

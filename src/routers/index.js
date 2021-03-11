@@ -9,6 +9,7 @@ import Register from '../pages/Register';
 import History from '../pages/Hitsory';
 import Genres from '../pages/Genres';
 import Recommend from '../pages/Recommend';
+import Result from '../pages/Result';
 
 
 
@@ -54,6 +55,10 @@ export const routers = [
     {
         path: '/recommend',
         component: Recommend,
+    },
+    {
+        path: '/result/:content',
+        component: Result,
     },
     // {
     //     path: '/home/car/new',
