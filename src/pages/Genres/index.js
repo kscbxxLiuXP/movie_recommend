@@ -1,12 +1,16 @@
-import { Timeline } from 'antd';
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import im5 from '../../assets/img/im5.png'
+import axios from 'axios'
+import { address } from '../../utils/api'
+import MovieList from '../../components/MovieList'
+import { convertLegacyProps } from 'antd/lib/button/button'
+
 class Genres extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: this.props.match.params.id,
+            movieList:[],
 
         }
     }
@@ -15,23 +19,28 @@ class Genres extends Component {
         document.body.scrollTop = 0;
     }
 
+    componentDidMount(){
+        axios({
+            url:address+'/certainTypeMovies',
+            method:'GET',
+            params:{
+                typeId:this.state.id
+            }
+        }).then(res => {
+            this.setState({movieList:res.data.data});
+            console.log("qwe");
+            console.log(res);
+            // res.data.data.movieList
+        })
+    }
+
     render() {
         return (
             <div>
                 {this.state.id}
-                <Timeline>
-                    <Timeline.Item>
-                        <div>Create a services site 2015-09-01
-                            </div>
-                        <div>
-                            <img src={"https://www.themoviedb.org//t/p/w300_and_h450_bestv2/dKTkxSeNgHdwgrAbhwbXuUk4tzb.jpg"} alt="a"></img>
-                        </div>
-
-                    </Timeline.Item>
-                    <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
-                </Timeline>,
+                
+                {/* <MovieList  movieList={this.movieList}>
+                </MovieList> */}
             </div>
         )
     }
