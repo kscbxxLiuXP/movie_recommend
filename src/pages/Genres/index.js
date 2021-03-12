@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import axios from 'axios'
-import { address_offline_rec } from '../../utils/api'
+import { address_movie } from '../../utils/api'
 import MovieList from '../../components/MovieList'
 import { convertLegacyProps } from 'antd/lib/button/button'
 
@@ -21,8 +21,11 @@ class Genres extends Component {
 
     componentDidMount(){
         axios({
-            url:address_offline_rec+'/certainTypeMovies/'+this.state.id,
+            url:address_movie+'/genre/genMovieList',
             method:'GET',
+            params:{
+                "genreid":this.state.id
+            }
         }).then(res => {
             var arr=res.data.data;
             arr = arr.slice(0,20);

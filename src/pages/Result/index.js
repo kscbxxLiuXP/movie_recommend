@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MovieList from '../../components/MovieList'
+import MovieList_id from '../../components/MovieList-id'
 import { Collapse, Row, Col, Radio,Tooltip, Button } from "antd";
 import axios from 'axios';
 import { address_offline_rec, address_movie } from '../../utils/api';
@@ -112,12 +112,11 @@ export default class Result extends Component {
                                         </Col>
                                     })
                                 }
-                            </Row>
-                            <Row>
-                            <Tooltip title="search">
-                                <Button type="dashed" shape="circle" icon={<CloseOutlined  />} />
+                            <Tooltip title="清空选项">
+                                <Button type="dashed" shape="circle" icon={<CloseOutlined/>} />
                             </Tooltip>
                             </Row>
+
                         </Radio.Group>
                         <h1>年代</h1>
                         <Radio.Group style={{ width: '100%' }} onChange={this.onChangeYear}> 
@@ -147,7 +146,7 @@ export default class Result extends Component {
                         </p>
                     </Panel>
                 </Collapse>
-                <MovieList movieList={this.state.movieList} />    
+                <MovieList_id movieList={this.state.movieList} />    
             </div> 
         )
     }
