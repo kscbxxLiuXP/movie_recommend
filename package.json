@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.1",
     "antd": "^4.13.0",
     "axios": "^0.21.1",
+    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-headroom": "^3.1.0",
@@ -41,5 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy":"http://39.96.52.243:8081"
+  "proxy": "http://39.96.52.243:8081"
 }

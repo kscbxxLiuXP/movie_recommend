@@ -146,18 +146,18 @@ class MyHeader extends Component {
     }
     goSearch(event) {
         console.log(event);
-        if (event.target.value !==""){
-            this.setState({ content: event.target.value}, ()=> {
-                this.props.history.push('/result/'+this.state.content);
+        if (event.target.value !== "") {
+            this.setState({ content: event.target.value }, () => {
+                this.props.history.push('/result/' + this.state.content);
             });
         } else {
             console.log("weikong");
         }
     }
     goSearchByButton() {
-        if(this.state.content!=="") {
-            this.props.history.push('/result/'+this.state.content);
-        } else{
+        if (this.state.content !== "") {
+            this.props.history.push('/result/' + this.state.content);
+        } else {
             console.log("kkk");
         }
     }
@@ -170,10 +170,10 @@ class MyHeader extends Component {
 
                         <div className="header-input-box">
                             <Dropdown overlay={this.getMenu()} trigger={['click']}>
-                                <Input onChange={(e) => {this.setState({content:e.target.value})}} onPressEnter={(event) => {this.goSearch(event)} } style={{ width: 400, height: 40, paddingLeft: 20, borderRadius: 30 }} placeholder="请输入你要搜索的电影"
+                                <Input onChange={(e) => { this.setState({ content: e.target.value }) }} onPressEnter={(event) => { this.goSearch(event) }} style={{ width: 400, height: 40, paddingLeft: 20, borderRadius: 30 }} placeholder="请输入你要搜索的电影"
                                     suffix={
 
-                                        <div className='header-search-button' onClick={() => { this.goSearchByButton()}}>
+                                        <div className='header-search-button' onClick={() => { this.goSearchByButton() }}>
 
                                             <SearchOutlined />
                                         </div>
@@ -251,7 +251,7 @@ class MyHeader extends Component {
                                         this.setState({ visible: false });
                                         setToken(this.state.username)
                                         this.props.history.push('/')
-                                      
+                                        window.location.reload(true)
                                     }
                                     console.log(res.data)
 

@@ -19,168 +19,49 @@ export default class Movie extends Component {
                 name: "加载中",
                 year: "加载中",
                 time: "加载中",
-                genre: [],
+                typeList: [],
                 overview: "",
-                actors: []
+                actorList: []
             },
             similarList: []
         }
 
-
-     
-        this.movieList = [
-            {
-                id: 1,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 2,
-                name: "勇敢者的游戏",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/5aeZQhMHghOZUK30qNCjgpQlkIq.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 3,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 4,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 5,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 1,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 2,
-                name: "勇敢者的游戏",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/5aeZQhMHghOZUK30qNCjgpQlkIq.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 3,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 4,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-            {
-                id: 5,
-                name: "玩具总动员",
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                rate: "9.0",
-
-            },
-        ];
-
     }
-    componentDidMount() {
-        let data = {
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-            rate: 9.4,
-            name: "玩具总动员",
-            year: "(1995)",
-            time: "1h 21m",
-            genre: ["动画", "冒险", "家庭", "喜剧"],
-            overview: "胡迪是小主人安弟最喜欢的传统牛仔玩偶，他和其他玩具趁主人不在时，便会＂活＂起来一起玩闹。可是好景不常，最新奇的热门玩具巴斯光年来了，他让胡迪备受冷落。失宠的胡迪为了巩固自己的地位，只好处心积虑地想要赶走巴斯。在一次意外中，胡迪和巴斯不幸陷入一个玩具虐待狂的邻居家中而命在旦夕。两个冤家路窄互不相容的对手，是否能够化敌为友、发挥机智，顺利地通过这场冒险之旅，回到小主的身边呢？",
-            actors: [
-                {
-                    name: "Tom Hanks",
-                    character: "Woody (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/zVyoR2ZNiVGymjZK4MMJHIdpxoW.jpg"
-                },
-                {
-                    name: "Tim Allen",
-                    character: "Buzz Lightyear (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/6qlDjidQSKNcJFHzTXh0gQS83ub.jpg"
-                },
-                {
-                    name: "Don Rickles",
-                    character: "Mr. Potato Head (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/iJLQV4dcbTUgxlWJakjDldzlMXS.jpg",
-                },
-                {
-                    name: "Jim Varney",
-                    character: "Slinky Dog (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/yrhgPWGOc36GN0P9kuJ48sU4fVa.jpg",
-                },
-                {
-                    name: "Wallace Shawn",
-                    character: "Rex (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/jviZU3Ae0vVKW6cYeEtjfxq2TWS.jpg",
-                },
-                {
-                    name: "John Ratzenberger",
-                    character: "Hamm (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/oRtDEOuIO1yDhTz5dORBdxXuLMO.jpg",
-                },
-                {
-                    name: "Annie Potts",
-                    character: "Bo Peep (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/hWIzkAH7jkSkxBfwdudxbSPxeno.jpg",
-                },
-                {
-                    name: "John Morris",
-                    character: "Andy (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/xMtT5UlPYZX7tobi55YFcdgyFp.jpg",
-                },
-                {
-                    name: "Erik von Detten",
-                    character: "Sid (voice)",
-                    actor_image: "https://www.themoviedb.org//t/p/w138_and_h175_face/7fHjKnLKmqzR0kmvRPLxpQE7BsK.jpg",
-                },
-            ]
-        }
+
+    componentWillReceiveProps(next) {
+        this.getData(next.match.params.id)
+        this.setState({
+            id: next.match.params.id
+        })
+    }
+    getData(id) {
         // console.log(this.state.id);
         axios({
             url: address_movie + "/movie/getDetail",
             method: "get",
             params: {
-                id: this.props.match.params.id
+                id: id
             },
         }).then(res => {
-              console.log(res);
+            // console.log(res.data.data);
             // this.setState({ detail: res.data.data })
-            this.setState({ detail: data })
-          
+            this.setState({ detail: res.data.data })
+
         })
 
         axios({
-            url: address_offline_rec + "/similar/" + this.props.match.params.id,
+            url: address_offline_rec + "/similar/" + id,
             method: "get"
         }).then(res => {
             this.setState({ similarList: res.data.data })
             console.log(res);
         })
+    }
+    componentDidMount() {
+        this.getData(this.props.match.params.id)
+    }
+    num(i) {
+        return parseFloat(i).toFixed(1)
     }
     render() {
         return (
@@ -198,8 +79,8 @@ export default class Movie extends Component {
                             <div className="movie-detail-info-time-and-rate">
 
                                 <div >
-                                    <Rate style={{ color: 'black' }} disabled defaultValue={this.state.detail.rate / 2} />
-                                    <span className="movie-detail-info-rate">{this.state.detail.rate}</span>
+                                    <Rate style={{ color: 'black' }} disabled value={this.num(this.state.detail.rating)} />
+                                    <span className="movie-detail-info-rate">{this.num(this.state.detail.rating)}</span>
                                 </div>
                                 <div className="movie-detail-info-time">
                                     时长：{this.state.detail.time}
@@ -209,7 +90,7 @@ export default class Movie extends Component {
                         </div>
                         <div className="movie-genre-wrapper">
                             <div style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, }}>分类</div>
-                            {this.state.detail.genre ? this.state.detail.genre.map((item, index) => {
+                            {this.state.detail.typeList ? this.state.detail.typeList.map((item, index) => {
                                 return <span key={index} className="movie-genre-item">
                                     <svg aria-hidden="true"
                                         focusable="false"
@@ -224,7 +105,7 @@ export default class Movie extends Component {
 
                                         </path>
                                     </svg>
-                                    {item}
+                                    {item.typename}
                                 </span>
                             }) : "加载中"}
                         </div>
@@ -237,7 +118,7 @@ export default class Movie extends Component {
                                 演职员
                         </div>
                             <div>
-                                {this.state.detail.actors.length!==0 ? this.state.detail.actors.map((item, index) => {
+                                {this.state.detail.actorList ? this.state.detail.actorList.map((item, index) => {
                                     return <Tooltip title={() => {
                                         return <div style={{ padding: 10 }}>
                                             <div>
