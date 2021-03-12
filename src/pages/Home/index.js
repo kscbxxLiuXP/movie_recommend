@@ -7,7 +7,7 @@ import MovieBoard from './MovieBoard'
 import MyCarousel from '../../components/MyCarousel'
 import axios from "axios"
 import { address_movie, address_offline_rec, address_user } from '../../utils/api'
-import { getUsername } from '../../utils/auth'
+import { getUsername, isLogin } from '../../utils/auth'
 export default class Home extends Component {
     constructor(props) {
         super(props)
@@ -56,30 +56,33 @@ export default class Home extends Component {
     ]
 
     componentDidMount() {
-        axios({
-            url: address_user + "/user/getUserInfoByUserName",
-            method: "get",
-            params: {
-                username: getUsername()
-            }
-
-        }).then(res => {
-            let userid = res.data.data.userid
+        if (isLogin()) {
             axios({
-                url: address_offline_rec + "/recommend/" + userid,
+                url: address_user + "/user/getUserInfoByUserName",
+                method: "get",
+                params: {
+                    username: getUsername()
+                }
+
             }).then(res => {
-                this.setState({ recommendList: res.data.data.slice(0, 10) })
-                // console.log(res.data.data);
+                let userid = res.data.data.userid
+                axios({
+                    url: address_offline_rec + "/recommend/" + userid,
+                }).then(res => {
+                    this.setState({ recommendList: res.data.data.slice(0, 10) })
+                    // console.log(res.data.data);
+                })
             })
-        })
+        }
+
         axios(
             {
                 url: address_movie + '/movie/getPopularMovieList',
-                method:"get"
+                method: "get"
             }
-        ).then(res=>{
-            let popular =res.data.data
-            this.setState({top_popular:popular})
+        ).then(res => {
+            let popular = res.data.data
+            this.setState({ top_popular: popular })
         })
         axios(
             {
