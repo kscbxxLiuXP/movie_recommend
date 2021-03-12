@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MovieList from '../../components/MovieList'
 import "./style.css"
 import axios from 'axios'
-import { address_offline_rec } from '../../utils/api'
+import { address_movie } from '../../utils/api'
 export default class TopPopular extends Component {
 
     constructor(props) {
@@ -15,7 +15,7 @@ export default class TopPopular extends Component {
 
         componentDidMount(){
         axios({
-            url:address_offline_rec+'/certainTypeMovies/'+this.state.id,
+            url:address_movie+'/movie/getPopularMovieList/',
             method:'GET',
         }).then(res => {
             var arr=res.data.data;
@@ -58,7 +58,7 @@ export default class TopPopular extends Component {
         return (
             <div>
                 <h1 className="title"> 流行榜</h1>
-                <MovieList  movieList={this.movieList}>
+                <MovieList  movieList={this.state.movieList}>
                 </MovieList>
             </div>
         )

@@ -6,10 +6,10 @@ import { withRouter } from 'react-router'
 const { Paragraph } = Typography;
 
 class MovieList extends Component {
-    // num(i) {
-    //     var num = i.toFixed(2);    
-    //     return num;
-    // }
+    num(i) {
+        var num = i.toFixed(2);  
+        return num;
+    }
     render() {
         return (
             <div className="movie-list-wrapper">
@@ -33,7 +33,7 @@ class MovieList extends Component {
                                 <div>
                                     <Rate allowHalf disabled defaultValue={item.rating} />
                                     
-                                    <span className="ant-rate-text"> {item.rating}</span>
+                                    <span className="ant-rate-text"> {this.num(item.rating)}</span>
                                 </div>
                             </div>
                         </div>
