@@ -3,6 +3,8 @@ import { Affix } from 'antd'
 import './style.css'
 import homelogo from '../../assets/img/homelogo.svg'
 import { withRouter } from 'react-router-dom'
+import axios from 'axios'
+import { address_offline_rec } from '../../utils/api'
 
 class MySider extends Component {
     constructor(props) {
@@ -10,85 +12,22 @@ class MySider extends Component {
         this.state = {
             currentGenreId: 1,
             id: 1,
-            isGenre: false
+            isGenre: false,
+            genres:[],
         }
-        this.genres = [
-            {
-                id: 1,
-                name: '惊悚',
-            },
-            {
-                id: 2,
-                name: '喜剧',
-            },
-            {
-                id: 3,
-                name: '科幻',
-            },
-            {
-                id: 4,
-                name: '犯罪',
-            },
-            {
-                id: 5,
-                name: '悬疑',
-            },
-            {
-                id: 6,
-                name: '动画',
-            },
-            {
-                id: 7,
-                name: '儿童',
-            },
-            {
-                id: 8,
-                name: '文艺',
-            },
-            {
-                id: 9,
-                name: '惊悚',
-            },
-            {
-                id: 10,
-                name: '惊悚',
-            },
-            {
-                id: 11,
-                name: '惊悚',
-            },
-            {
-                id: 12,
-                name: '喜剧',
-            },
-            {
-                id: 13,
-                name: '科幻',
-            },
-            {
-                id: 14,
-                name: '犯罪',
-            },
-            {
-                id: 15,
-                name: '悬疑',
-            },
-            {
-                id: 16,
-                name: '动画',
-            },
-            {
-                id: 17,
-                name: '儿童',
-            },
-            {
-                id: 18,
-                name: '文艺',
-            },
 
-        ]
     }
     componentDidMount() {
+
+        console.log("begin");
+        axios({
+            url:address_offline_rec+'/getTypes',
+            method:'GET'
+        }).then(res => {
+            this.setState({genres:res.data.data})
+        });
+
+
         let a = this.props.location.pathname.split('/');
         if (a[1] === 'genre') {
             this.setState({ id: a[2], isGenre: true })
@@ -124,9 +63,9 @@ class MySider extends Component {
                     <div >
                         <div style={{ width: 200, fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>分类</div>
                         <>
-                            {this.genres.map((item, index) => {
+                            {this.state.genres.map((item, index) => {
 
-                                return <div key={index} className={this.renderItemClassName(item.id)} onClick={() => {
+                                return <div key={index} className={this.renderItemClassName(item.typeId)} onClick={() => {
                                     let timer
                                     //设置定时器
                                     var osTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -142,7 +81,7 @@ class MySider extends Component {
                                             clearInterval(timer);
                                         };
                                     }, 10);
-                                    this.props.history.push('/genre/' + item.id);
+                                    this.props.history.push('/genre/' + item.typeId);
 
                                 }}>
                                     <svg aria-hidden="true"
@@ -158,13 +97,14 @@ class MySider extends Component {
 
                                         </path>
                                     </svg>
-                                    {item.name}
+                                    {item.typeName}
                                 </div>
                             })}
                         </>
                     </div>
                     <div style={{ textAlign: 'center', marginTop: 10, }}>Copyright ©2021 <br /><span style={{ fontWeight: 'bold' }}>MovieRecommender</span></div>
                 </Affix>
+            
             </div>
         )
     }
