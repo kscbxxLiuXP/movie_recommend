@@ -19,45 +19,10 @@ export default class Home extends Component {
             genre3: [],
             genre4: [],
             genre5: [],
+            highRateMovieList:[]
+
         }
     }
-    movieList = [
-        {
-            id: 1,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
-
-        },
-        {
-            id: 2,
-            name: "勇敢者的游戏",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/5aeZQhMHghOZUK30qNCjgpQlkIq.jpg",
-            rate: "9.0",
-
-        },
-        {
-            id: 3,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
-
-        },
-        {
-            id: 4,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
-
-        },
-        {
-            id: 5,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
-
-        },
-    ]
 
     componentDidMount() {
         if (isLogin()) {
@@ -88,9 +53,17 @@ export default class Home extends Component {
             let popular = res.data.data
             this.setState({ top_popular: popular })
         })
+
+        axios({
+            url:address_movie+'/movie/getHighRateMovieList',
+            method:'GET'
+        }).then(res => {
+            this.setState({highRateMovieList:res.data.data})
+        })
+
         axios(
             {
-                url: address_movie + '/genre/genMovieList',
+                url: address_movie + '/genre/getMovieList',
                 method: 'get',
                 params: { genreid: 1 }
             }
@@ -170,16 +143,17 @@ export default class Home extends Component {
                     <Col span={4}>
                         <div style={{ marginLeft: 10, marginTop: 20 }}>
                             <Affix offsetTop={80}>
-                                <Card title="热播榜">
+                                <Card>
 
-                                    <Table pagination={false} dataSource={this.movieList}>
+                                    <Table pagination={false} dataSource={this.state.top_popular.slice(0,5)}>
 
                                         <column
+                                            title="热播榜"
                                             key="action"
                                             render={(text, record, index) => (
                                                 <Space size="middle">
                                                     <div>{index + 1}</div>
-                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.id) }}>{record.name}</Button>
+                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
                                                 </Space>
                                             )}
                                         />
@@ -211,14 +185,14 @@ export default class Home extends Component {
 
 
 
-                                    <Table pagination={false} dataSource={this.movieList}>
+                                    <Table pagination={false} dataSource={this.state.highRateMovieList.slice(0,5)}>
                                         <column
                                             title="评分榜"
                                             key="action"
                                             render={(text, record, index) => (
                                                 <Space size="middle">
                                                     <div>{index + 1}</div>
-                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.id) }}>{record.name}</Button>
+                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
                                                 </Space>
                                             )}
                                         />
