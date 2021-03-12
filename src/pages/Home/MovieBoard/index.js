@@ -22,12 +22,12 @@ import { withRouter } from 'react-router'
 
                 <div className="Home-MovieBoard-ListWrapper">
                     {this.props.movieList.map((item, index) => {
-                        return <div className="Home-MovieBoard-ItemWrapper" key={index}  onClick={() => { this.props.history.push('/movie/'+item.id) }}>
+                        return <div className="Home-MovieBoard-ItemWrapper" key={index}  onClick={() => { this.props.history.push('/movie/'+item.movieid) }}>
                             <img className="Home-MovieBoard-ItemImage" alt={item.name} width={"100px"} src={item.image_url} />
                             <div className="Home-MovieBoard-ItemRating">
                             
-                                <div className="Home-MovieBoard-ItemRating-name">{item.name}</div>
-                                <div className="Home-MovieBoard-ItemRating-rate"> {item.rate}</div>
+                                <div className="Home-MovieBoard-ItemRating-name">{item.title}</div>
+                                <div className="Home-MovieBoard-ItemRating-rate"> {item.rating}</div>
                             </div>
                         </div>
                     })}
