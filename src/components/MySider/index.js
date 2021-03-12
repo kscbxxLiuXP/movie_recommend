@@ -3,6 +3,7 @@ import { Affix } from 'antd'
 import './style.css'
 import homelogo from '../../assets/img/homelogo.svg'
 import { withRouter } from 'react-router-dom'
+import { backToTop } from '../../utils/utils'
 
 class MySider extends Component {
     constructor(props) {
@@ -127,21 +128,7 @@ class MySider extends Component {
                             {this.genres.map((item, index) => {
 
                                 return <div key={index} className={this.renderItemClassName(item.id)} onClick={() => {
-                                    let timer
-                                    //设置定时器
-                                    var osTop = document.documentElement.scrollTop || document.body.scrollTop;
-                                    var ispeed = -osTop / 20;
-                                    timer = setInterval(function () {
-                                        //获取滚动条距离顶部高度
-                                        var osTop = document.documentElement.scrollTop || document.body.scrollTop;
-
-
-                                        document.documentElement.scrollTop = document.body.scrollTop = osTop + ispeed;
-                                        //到达顶部，清除定时器
-                                        if (osTop === 0) {
-                                            clearInterval(timer);
-                                        };
-                                    }, 10);
+                                    backToTop()
                                     this.props.history.push('/genre/' + item.id);
 
                                 }}>

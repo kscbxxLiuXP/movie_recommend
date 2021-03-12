@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button } from 'antd'
+import { Card, Button, Rate } from 'antd'
 import { isLogin } from '../../../utils/auth'
 import { withRouter } from 'react-router'
 import './style.css'
@@ -21,7 +21,7 @@ class GuessLike extends Component {
                             <div className="GuessLikeBoard-ItemRating">
 
                                 <div className="GuessLikeBoard-ItemRating-name">{item.title}</div>
-                                <div className="GuessLikeBoard-ItemRating-rate"> {item.rating.toFixed(2)}</div>
+                                <div className="GuessLikeBoard-ItemRating-rate"> 评分： {item.rating.toFixed(1)}</div>
                             </div>
                         </div>
                     })}
@@ -35,9 +35,5 @@ class GuessLike extends Component {
     }
 }
 
-const gridStyle = {
-    width: '25%',
-    textAlign: 'center',
-};
 
 export default withRouter(GuessLike)

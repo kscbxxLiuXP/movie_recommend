@@ -141,16 +141,17 @@ export default class MoviePlay extends Component {
             this.setState({
                 userid: res.data.data
             })
+            axios({
+                url: address_recommend + "/recommend/getMovie",
+                method: "get",
+                params: {
+                    userid: this.state.userid
+                }
+            }).then(res=>{
+                console.log(res);
+            })
         })
-        axios({
-            url: address_recommend + "/recommend/getMovie",
-            method: "get",
-            params: {
-                userid: this.state.userid
-            }
-        }).then(res=>{
-            console.log(res);
-        })
+     
     }
     handleChange = value => {
 
@@ -174,7 +175,7 @@ export default class MoviePlay extends Component {
                 url: address_movie + "/rating/insertRatinginRedis",
                 method: "get",
                 params: {
-                    ratingID: ratingID
+                    ratingId: ratingID
                 }
             }).then(res => {
                 if (res.data.code === '0') {
