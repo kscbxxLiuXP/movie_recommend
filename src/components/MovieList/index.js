@@ -6,6 +6,10 @@ import { withRouter } from 'react-router'
 const { Paragraph } = Typography;
 
 class MovieList extends Component {
+    // num(i) {
+    //     var num = i.toFixed(2);    
+    //     return num;
+    // }
     render() {
         return (
             <div className="movie-list-wrapper">
@@ -14,7 +18,7 @@ class MovieList extends Component {
                         <div className="movie-list-item">
                             <Image className="image" width={130} src={item.image_url}> </Image>
                             <div className="movie-list-item-details">
-                                <Button type="link" onClick={() => { this.props.history.push('../movie/' + item.id) }}>{item.name}
+                                <Button type="link" onClick={() => { this.props.history.push('../movie/' + item.movieId) }}>{item.title}
                                 </Button>
                                 <Paragraph
                                     ellipsis={{
@@ -24,12 +28,12 @@ class MovieList extends Component {
                                         },
                                     }}
                                 >
-                                    {/* {item.overview} */}
-                                            To be, or not to be, that is a question: Whether it is nobler in the mind to suffer. The slings and arrows of outrageous fortune Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, 'tis a consummation Devoutly to be wish'd. To die, to sleep To sleep- perchance to dream: ay, there's the rub! For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause. There 's the respect That makes calamity of so long life--William Shakespeare
+                                    {item.overview}
                                         </Paragraph>
                                 <div>
-                                    <Rate allowHalf disabled defaultValue={item.rate / 2} />
-                                    <span className="ant-rate-text">{item.rate}</span>
+                                    <Rate allowHalf disabled defaultValue={item.rating} />
+                                    
+                                    <span className="ant-rate-text"> {item.rating}</span>
                                 </div>
                             </div>
                         </div>

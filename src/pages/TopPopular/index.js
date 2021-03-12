@@ -2,46 +2,36 @@ import React, { Component } from 'react'
 import MovieList from '../../components/MovieList'
 import "./style.css"
 import axios from 'axios'
-import { address } from '../../utils/api'
+import { address_offline_rec } from '../../utils/api'
 export default class TopPopular extends Component {
 
-    movieList = [
-        {
-            id: 1,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
+    constructor(props) {
+        super(props);
+        this.state = {
+            movieList:[],
 
-        },
-        {
-            id: 2,
-            name: "勇敢者的游戏",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/5aeZQhMHghOZUK30qNCjgpQlkIq.jpg",
-            rate: "9.0",
+        }
+    }
 
-        },
-        {
-            id: 3,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
+        componentDidMount(){
+        axios({
+            url:address_offline_rec+'/certainTypeMovies/'+this.state.id,
+            method:'GET',
+        }).then(res => {
+            var arr=res.data.data;
+            arr = arr.slice(0,50);
+            this.setState({movieList:arr},() => {
+                // console.log(res.data.data)
+            });
+            // console.log("123123");
+            // console.log(res);
+            // res.data.data.movieList
+            console.log(res.data.data);
+            console.log(this.state.movieList[0]);
 
-        },
-        {
-            id: 4,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
+        })
+    }
 
-        },
-        {
-            id: 5,
-            name: "玩具总动员",
-            image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-            rate: "9.0",
-
-        },
-    ]
 
     // componentDidMount(){
     //     axios({

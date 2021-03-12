@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import axios from 'axios'
-import { address } from '../../utils/api'
+import { address_offline_rec } from '../../utils/api'
 import MovieList from '../../components/MovieList'
 import { convertLegacyProps } from 'antd/lib/button/button'
 
@@ -15,22 +15,26 @@ class Genres extends Component {
         }
     }
     componentWillReceiveProps(newProps) {
-        this.setState({ id: newProps.match.params.id })
+        this.setState({ id: newProps.match.params.id },()=>this.componentDidMount())
         document.body.scrollTop = 0;
     }
 
     componentDidMount(){
         axios({
-            url:address+'/certainTypeMovies',
+            url:address_offline_rec+'/certainTypeMovies/'+this.state.id,
             method:'GET',
-            params:{
-                typeId:this.state.id
-            }
         }).then(res => {
-            this.setState({movieList:res.data.data});
-            console.log("qwe");
-            console.log(res);
+            var arr=res.data.data;
+            arr = arr.slice(0,20);
+            this.setState({movieList:arr},() => {
+                // console.log(res.data.data)
+            });
+            // console.log("123123");
+            // console.log(res);
             // res.data.data.movieList
+            console.log(res.data.data);
+            console.log(this.state.movieList[0]);
+
         })
     }
 
@@ -39,8 +43,8 @@ class Genres extends Component {
             <div>
                 {this.state.id}
                 
-                {/* <MovieList  movieList={this.movieList}>
-                </MovieList> */}
+                <MovieList  movieList={this.state.movieList}>
+                </MovieList>
             </div>
         )
     }
