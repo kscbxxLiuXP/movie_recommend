@@ -10,6 +10,8 @@ import {
     Select,
     message
   } from 'antd';
+import axios from 'axios';
+import { address, address_cold_start, address_user } from '../../utils/api';
   const {Option} = Select
   const formItemLayout = {
     labelCol: {
@@ -42,13 +44,50 @@ import {
     },
   };
   
-  const RegistrationForm = () => {
+  const RegistrationForm = ({occupation}) => {
     const [form] = Form.useForm();
-  
+    
+    const ageLevel =(age)=>{
+        if(age<=18){
+            return 1
+        }else if(age>18 &&age<=40){
+            return 2
+        }else if(age>40 &&age<=65){
+            return 3
+        }else{
+            return 4
+        }
+    }
     const onFinish = (values) => {
-        message.success("注册成功")
-        form.resetFields()
-         console.log('Received values of form: ', values);
+        values.zipcode=0
+        axios(
+            {
+                url:address_user+"/user/registration",
+                method:'get',
+                params:values
+            }
+        ).then(res=>{
+            console.log(res.data);
+            message.success("注册成功")
+            // form.resetFields()
+            let cold={
+                userId : parseInt(res.data.data) ,
+                gender : values.gender==='M'?0:1,
+                age : ageLevel( parseInt(values.age)),
+                occupation : values.occupation,
+            }
+            axios({
+                url:address_cold_start+"/coldstart",
+                method:"post",
+                data:cold,
+            }).then(res=>{
+                console.log(res);
+                message.success("新用户冷启动完成")
+            })
+            console.log(cold);
+        }
+        )
+     
     };
   
 
@@ -117,24 +156,25 @@ import {
         </Form.Item>
           <Divider >个性化信息</Divider>
       
-        <Form.Item name="birth" label="生日" rules={[{ required: true, message: '选择生日!' }]}>
-        <DatePicker  format="YYYY-MM-DD" />
+        <Form.Item name="age" label="年龄" rules={[{ required: true, message: '请输入年龄!' }]}>
+        <Input  />
       </Form.Item>
       <Form.Item name="gender" label="性别"  rules={[{ required: true, message: '选择性别!' }]}>
         <Radio.Group>
-          <Radio value="男">男</Radio>
-          <Radio value="女">女</Radio>
+          <Radio value="M">男</Radio>
+          <Radio value="F">女</Radio>
         </Radio.Group>
       </Form.Item>
       <Form.Item
-        name="job"
+        name="occupation"
         label="职业"
         hasFeedback
         rules={[{ required: true, message: '请选择您的职业!' }]}
       >
         <Select placeholder="请选择职业">
-          <Option value="teacher">教师</Option>
-          <Option value="student">学生</Option>
+            {occupation.map((item,index)=>{
+                return    <Option key={index} value={item.id}>{item.occupation}</Option>
+            })}
         </Select>
       </Form.Item>
         <Form.Item {...tailFormItemLayout}>
@@ -147,6 +187,37 @@ import {
     );
   };
 export default class Register extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            occupation:[]
+        }
+    }
+    componentDidMount(){
+        axios({
+            url:address_user+"/user/getOccupationList",
+            method:'get'
+        }).then(res=>{
+            console.log(res.data);
+            this.setState({
+                occupation:res.data.data
+            })
+        })
+
+    //   let occupation=[
+    //     {
+    //     id:1,
+    //     name:"教师",
+    //     },
+    //     {
+    //         id:2,
+    //         name:"学生",
+    //         },
+    // ]
+    // this.setState({
+    //     occupation:occupation
+    // })
+  }
     render() {
         return (
             <div className="register-wrapper">
@@ -155,7 +226,7 @@ export default class Register extends Component {
                 
                 </div>
                 <Divider/>
-                <RegistrationForm onFinish/>
+                <RegistrationForm occupation={this.state.occupation} onFinish/>
                 
             </div>
         )

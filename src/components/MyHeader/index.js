@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { Input, Layout, Menu, Dropdown, Avatar, Button, Tooltip, Divider } from 'antd';
+import { Input, Layout, Menu, Dropdown, Avatar, Button, Tooltip, Divider, message } from 'antd';
 import './style.css'
 import { UserOutlined, HistoryOutlined, LockOutlined, SearchOutlined } from '@ant-design/icons';
 import Modal from 'antd/lib/modal/Modal';
 import Headroom from 'react-headroom';
 import { withRouter } from 'react-router';
 import { clearToken, isLogin, setToken, getUsername } from '../../utils/auth';
+import axios from 'axios';
+import { address_user } from '../../utils/api';
 const { Header, } = Layout;
 
 
@@ -115,9 +117,9 @@ class MyHeader extends Component {
 
         if (rate === 1) {
             return "#FF183E"
-        } else if(rate===2){
+        } else if (rate === 2) {
             return "#FF5C38"
-        } else if(rate===3){
+        } else if (rate === 3) {
             return "#FFB821"
         }
         else {
@@ -133,8 +135,8 @@ class MyHeader extends Component {
             {_this.topPopular.map((item, index) => {
                 return <Menu.Item key={index} onClick={() => { this.props.history.push("/movie/" + item.id) }}>
                     <div style={{ display: 'flex' }}>
-                        <div style={{ backgroundColor: this.renderColor(index + 1), color: 'white', width: 25, textAlign: 'center',borderRadius:2 }}>{index + 1}</div>
-                        <div style={{ marginLeft: 10,fontSize:15,letterSpacing:1 }}>{item.name}</div>
+                        <div style={{ backgroundColor: this.renderColor(index + 1), color: 'white', width: 25, textAlign: 'center', borderRadius: 2 }}>{index + 1}</div>
+                        <div style={{ marginLeft: 10, fontSize: 15, letterSpacing: 1 }}>{item.name}</div>
                     </div>
 
                 </Menu.Item>
@@ -172,6 +174,7 @@ class MyHeader extends Component {
                                     suffix={
 
                                         <div className='header-search-button' onClick={() => { this.goSearchByButton()}}>
+
                                             <SearchOutlined />
                                         </div>
 
@@ -233,9 +236,26 @@ class MyHeader extends Component {
 
                             </div>
                             <Button style={{ marginTop: 20, borderRadius: 30, width: 100 }} type="primary" onClick={() => {
-                                this.setState({ visible: false });
-                                this.props.history.push('/')
-                                setToken(this.state.username)
+                                axios({
+                                    url: address_user + '/login',
+                                    method: 'get',
+                                    params: {
+                                        username: this.state.username,
+                                        password: this.state.password,
+                                    }
+                                }).then(res => {
+                                    if (res.data.code === '1') {
+                                        message.error(res.data.msg)
+                                    } else {
+                                        message.success("登录成功！")
+                                        this.setState({ visible: false });
+                                        setToken(this.state.username)
+                                        this.props.history.push('/')
+                                      
+                                    }
+                                    console.log(res.data)
+
+                                })
                             }}>登录</Button>
                         </div>
 
