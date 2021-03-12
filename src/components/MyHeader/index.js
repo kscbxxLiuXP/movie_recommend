@@ -16,6 +16,7 @@ class MyHeader extends Component {
             visible: false,
             username: "",
             password: "",
+            content: ""
         }
         this.topPopular = [
             {
@@ -141,6 +142,23 @@ class MyHeader extends Component {
         </Menu>)
 
     }
+    goSearch(event) {
+        console.log(event);
+        if (event.target.value !==""){
+            this.setState({ content: event.target.value}, ()=> {
+                this.props.history.push('/result/'+this.state.content);
+            });
+        } else {
+            console.log("weikong");
+        }
+    }
+    goSearchByButton() {
+        if(this.state.content!=="") {
+            this.props.history.push('/result/'+this.state.content);
+        } else{
+            console.log("kkk");
+        }
+    }
     render() {
         return (
             <Headroom>
@@ -150,10 +168,10 @@ class MyHeader extends Component {
 
                         <div className="header-input-box">
                             <Dropdown overlay={this.getMenu()} trigger={['click']}>
-                                <Input style={{ width: 400, height: 40, paddingLeft: 20, borderRadius: 30 }} placeholder="请输入你要搜索的电影"
+                                <Input onChange={(e) => {this.setState({content:e.target.value})}} onPressEnter={(event) => {this.goSearch(event)} } style={{ width: 400, height: 40, paddingLeft: 20, borderRadius: 30 }} placeholder="请输入你要搜索的电影"
                                     suffix={
 
-                                        <div className='header-search-button' onClick={() => { this.props.history.push('/result/1')}}>
+                                        <div className='header-search-button' onClick={() => { this.goSearchByButton()}}>
                                             <SearchOutlined />
                                         </div>
 

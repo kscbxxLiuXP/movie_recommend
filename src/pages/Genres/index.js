@@ -1,37 +1,50 @@
-import { Timeline } from 'antd';
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import im5 from '../../assets/img/im5.png'
+import axios from 'axios'
+import { address_offline_rec } from '../../utils/api'
+import MovieList from '../../components/MovieList'
+import { convertLegacyProps } from 'antd/lib/button/button'
+
 class Genres extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: this.props.match.params.id,
+            movieList:[],
 
         }
     }
     componentWillReceiveProps(newProps) {
-        this.setState({ id: newProps.match.params.id })
+        this.setState({ id: newProps.match.params.id },()=>this.componentDidMount())
         document.body.scrollTop = 0;
+    }
+
+    componentDidMount(){
+        axios({
+            url:address_offline_rec+'/certainTypeMovies/'+this.state.id,
+            method:'GET',
+        }).then(res => {
+            var arr=res.data.data;
+            arr = arr.slice(0,20);
+            this.setState({movieList:arr},() => {
+                // console.log(res.data.data)
+            });
+            // console.log("123123");
+            // console.log(res);
+            // res.data.data.movieList
+            console.log(res.data.data);
+            console.log(this.state.movieList[0]);
+
+        })
     }
 
     render() {
         return (
             <div>
                 {this.state.id}
-                <Timeline>
-                    <Timeline.Item>
-                        <div>Create a services site 2015-09-01
-                            </div>
-                        <div>
-                            <img src={"https://www.themoviedb.org//t/p/w300_and_h450_bestv2/dKTkxSeNgHdwgrAbhwbXuUk4tzb.jpg"} alt="a"></img>
-                        </div>
-
-                    </Timeline.Item>
-                    <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
-                </Timeline>,
+                
+                <MovieList  movieList={this.state.movieList}>
+                </MovieList>
             </div>
         )
     }
