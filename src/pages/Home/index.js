@@ -15,7 +15,12 @@ export default class Home extends Component {
             recommendList: [],
             top_popular: [],
             genre1: [],
+            genre2: [],
+            genre3: [],
+            genre4: [],
+            genre5: [],
             highRateMovieList:[]
+
         }
     }
 
@@ -100,6 +105,17 @@ export default class Home extends Component {
             console.log(genre4);
             this.setState({ genre4: genre4 });
         })
+        axios(
+            {
+                url: address_movie + '/genre/genMovieList',
+                method: 'get',
+                params: { genreid: 5 }
+            }
+        ).then(res => {
+            let genre5 = res.data.data.slice(0, 11)
+            console.log(genre5);
+            this.setState({ genre5: genre5 });
+        })
 
 
     }
@@ -118,11 +134,11 @@ export default class Home extends Component {
                     <Col span={20}>
 
                         <MovieBoard title="热门" movieList={this.state.top_popular} url="/top-popular" />
-                        <MovieBoard title="喜剧" movieList={this.state.genre1} url="/genre/1" />
-                        <MovieBoard title="惊悚" movieList={this.state.genre1} url="/genre/2" />
-                        <MovieBoard title="动画" movieList={this.state.genre1} url="/genre/3" />
-                        <MovieBoard title="科幻" movieList={this.state.genre1} url="/genre/4" />
-                        <MovieBoard title="魔幻" movieList={this.state.genre1} url="/genre/5" />
+                        <MovieBoard title="音乐" movieList={this.state.genre1} url="/genre/1" />
+                        <MovieBoard title="动作" movieList={this.state.genre2} url="/genre/2" />
+                        <MovieBoard title="奇幻" movieList={this.state.genre3} url="/genre/3" />
+                        <MovieBoard title="惊悚" movieList={this.state.genre4} url="/genre/4" />
+                        <MovieBoard title="西部" movieList={this.state.genre5} url="/genre/5" />
                     </Col>
                     <Col span={4}>
                         <div style={{ marginLeft: 10, marginTop: 20 }}>

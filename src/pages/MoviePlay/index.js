@@ -1,10 +1,15 @@
-import { Button, Rate, Card, Affix, Row, Col, Input, Divider } from 'antd';
+import { Button, Rate, Card, Affix, Row, Col, Input, Divider, message } from 'antd';
 import React, { Component } from 'react'
 import "./style.css";
 import { Player } from "video-react";
 import video from '../../assets/video/video.mp4'
 import MovieBoard from '../Home/MovieBoard';
 import Avatar from 'antd/lib/avatar/avatar';
+import axios from 'axios';
+import { address_movie, address_offline_rec, address_rating, address_user, address_recommend } from '../../utils/api';
+import { num } from '../../utils/utils';
+import { getUsername } from '../../utils/auth';
+import moment from 'moment';
 const desc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 export default class MoviePlay extends Component {
     constructor(props) {
@@ -12,6 +17,11 @@ export default class MoviePlay extends Component {
         this.state = {
             id: this.props.match.params.id,
             value: 0,
+            similarList: [],
+            detail: {
+                typeList: [],
+            },
+            userid: "",
         }
         this.data = {
             image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
@@ -22,80 +32,7 @@ export default class MoviePlay extends Component {
             time: "1h 21m",
             genre: ["动画", "冒险", "家庭", "喜剧"],
         }
-        this.same = [
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
 
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            },
-            {
-                image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
-                poster_url: "https://www.themoviedb.org//t/p/w533_and_h300_bestv2/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
-                rate: 9.4,
-                name: "玩具总动员",
-
-                time: "1h 21m",
-            }
-        ]
         this.movieList = [
             {
                 id: 1,
@@ -167,10 +104,86 @@ export default class MoviePlay extends Component {
 
         ]
     }
+    getData(id) {
+        // console.log(this.state.id);
+        axios({
+            url: address_movie + "/movie/getDetail",
+            method: "get",
+            params: {
+                id: id
+            },
+        }).then(res => {
+            console.log(res.data.data);
+            // this.setState({ detail: res.data.data })
+            this.setState({ detail: res.data.data })
 
+        })
+
+        axios({
+            url: address_offline_rec + "/similar/" + id,
+            method: "get"
+        }).then(res => {
+            this.setState({ similarList: res.data.data })
+            console.log(res);
+        })
+    }
+    componentDidMount() {
+        this.getData(this.props.match.params.id)
+
+        axios({
+            url: address_user + "/user/getUserID",
+            method: "get",
+            params: {
+                username: getUsername()
+            }
+        }).then(res => {
+            console.log(res.data.data);
+            this.setState({
+                userid: res.data.data
+            })
+            axios({
+                url: address_recommend + "/recommend/getMovie",
+                method: "get",
+                params: {
+                    userid: this.state.userid
+                }
+            }).then(res=>{
+                console.log(res);
+            })
+        })
+     
+    }
     handleChange = value => {
-        let a = value * 2
-        this.setState({ value: a });
+
+        this.setState({ value });
+        let data = {
+            userID: this.state.userid,
+            movieID: parseInt(this.props.match.params.id),
+            rating: value,
+            timestamp: moment().format("YYYY-MM-DD HH:mm:ss")
+        }
+        console.log(data)
+        axios({
+            url: address_rating + "/rating/insertRatingInSQL",
+            method: "get",
+            params: data
+        }).then(res => {
+            let ratingID = res.data.data
+            console.log(ratingID);
+
+            axios({
+                url: address_movie + "/rating/insertRatinginRedis",
+                method: "get",
+                params: {
+                    ratingId: ratingID
+                }
+            }).then(res => {
+                if (res.data.code === '0') {
+                    message.success("评分更新成功！")
+                }
+            })
+        })
+
     };
 
     render() {
@@ -189,13 +202,13 @@ export default class MoviePlay extends Component {
                             <div className="movie-play-detail" >
                                 <div>
                                     <span className="movie-play-detail-title">
-                                        {this.data.name}
+                                        {this.state.detail.name}
                                     </span>
-                                    <span className="movie-play-detail-rate">{this.data.rate}</span>
+                                    <span className="movie-play-detail-rate">{num(this.state.detail.rating)}</span>
                                     <div style={{ marginTop: 10 }}>
-                                        {this.data.genre.map((item, index) => {
+                                        {this.state.detail.typeList.map((item, index) => {
                                             return <span style={{ backgroundColor: "#303137", padding: "3px 8px", color: '#98989b', marginRight: 10 }} key={index}>
-                                                {item}
+                                                {item.typename}
                                             </span>
                                         })}
                                     </div>
@@ -203,7 +216,7 @@ export default class MoviePlay extends Component {
 
                                 <div  >
                                     <span style={{ color: 'white', fontSize: 20 }}>你的评分：</span><span className="movie-play-detail-rate">{this.state.value}</span><br />
-                                    <Rate allowHalf defaultValue={2.5} count={5} tooltips={desc} onChange={this.handleChange} value={this.state.value/2} />
+                                    <Rate defaultValue={2.5} count={5} tooltips={desc} onChange={this.handleChange} value={this.state.value} />
 
                                 </div>
 
@@ -213,14 +226,13 @@ export default class MoviePlay extends Component {
                         <div className="movie-same-recommend">
                             <div style={{ color: 'white', fontSize: 20, padding: "10px 20px" }}>同类电影推荐</div>
                             <div className="movie-same-recommend-list">
-                                {this.same.map((item, index) => {
+                                {this.state.similarList.map((item, index) => {
                                     return <div className="movie-same-recommend-list-item" key={index}>
-                                        <img height={80} style={{ borderRadius: 3 }} src={item.poster_url} alt={item.name} />
+                                        <img height={80} style={{ borderRadius: 3 }} src={item.poster_url} alt={item.title} />
                                         <div style={{ marginLeft: 10 }}>
-                                            <div className="movie-same-recommend-list-item-name" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>
-                                            <div className="movie-same-recommend-list-item-time">{item.time}</div>
-                                            <div > <Rate style={{ fontSize: 14 }} disabled defaultValue={item.rate / 2} />
-                                                <span className="movie-same-recommend-list-item-rate">{item.rate}</span>
+                                            <div className="movie-same-recommend-list-item-name" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</div>
+                                            <div className="movie-same-recommend-list-item-rate">评分：{num(item.rating)}</div>
+                                            <div > <Rate style={{ fontSize: 14 }} disabled value={num(item.rating)} />
                                             </div>
                                         </div>
                                     </div>
