@@ -18,8 +18,7 @@ class MovieList_id extends Component {
                         <div className="movie-list-item">
                             <Image className="image" width={130} src={item.image_url}> </Image>
                             <div className="movie-list-item-details">
-                                <Button type="link" onClick={() => { this.props.history.push('../movie/' + item.movieid) }}>{item.title}
-                                </Button>
+                            <div className="movie-list-item-title" onClick={() => { this.props.history.push('../movie/' + item.movieid) }}>{item.title}</div>
                                 <Paragraph
                                     ellipsis={{
                                         rows: 3,

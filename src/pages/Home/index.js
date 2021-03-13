@@ -8,6 +8,9 @@ import MyCarousel from '../../components/MyCarousel'
 import axios from "axios"
 import { address_movie, address_offline_rec, address_user } from '../../utils/api'
 import { getUsername, isLogin } from '../../utils/auth'
+
+import './style.css'
+import { backToTop } from '../../utils/utils'
 export default class Home extends Component {
     constructor(props) {
         super(props)
@@ -19,7 +22,7 @@ export default class Home extends Component {
             genre3: [],
             genre4: [],
             genre5: [],
-            highRateMovieList:[]
+            highRateMovieList: []
 
         }
     }
@@ -55,15 +58,15 @@ export default class Home extends Component {
         })
 
         axios({
-            url:address_movie+'/movie/getHighRateMovieList',
-            method:'GET'
+            url: address_movie + '/movie/getHighRateMovieList',
+            method: 'GET'
         }).then(res => {
-            this.setState({highRateMovieList:res.data.data})
+            this.setState({ highRateMovieList: res.data.data })
         })
 
         axios(
             {
-                url: address_movie + '/genre/getMovieList',
+                url: address_movie + '/genre/genMovieList',
                 method: 'get',
                 params: { genreid: 1 }
             }
@@ -80,7 +83,7 @@ export default class Home extends Component {
             }
         ).then(res => {
             let genre2 = res.data.data.slice(0, 11)
-            console.log(genre2);
+            console.log(res);
             this.setState({ genre2: genre2 });
         })
         axios(
@@ -119,7 +122,20 @@ export default class Home extends Component {
 
 
     }
+    renderColor(rate) {
 
+        if (rate === 1) {
+            return "#FF183E"
+        } else if (rate === 2) {
+            return "#FF5C38"
+        } else if (rate === 3) {
+            return "#FFB821"
+        }
+        else {
+            return '#7F7F8C'
+        }
+
+    }
     render() {
         return (
             <>
@@ -131,7 +147,7 @@ export default class Home extends Component {
                     <GuessLike movieList={this.state.recommendList} />
                 </div>
                 <Row style={{ paddingLeft: 40, paddingRight: 10, marginTop: 20 }} >
-                    <Col span={20}>
+                    <Col span={19}>
 
                         <MovieBoard title="热门" movieList={this.state.top_popular} url="/top-popular" />
                         <MovieBoard title="音乐" movieList={this.state.genre1} url="/genre/1" />
@@ -143,23 +159,22 @@ export default class Home extends Component {
                     <Col span={4}>
                         <div style={{ marginLeft: 10, marginTop: 20 }}>
                             <Affix offsetTop={80}>
-                                <Card>
-
-                                    <Table pagination={false} dataSource={this.state.top_popular.slice(0,5)}>
+                                <div className="top-board">
+                                    <Table size="small" pagination={false} dataSource={this.state.top_popular.slice(0, 5)}>
 
                                         <column
                                             title="热播榜"
                                             key="action"
                                             render={(text, record, index) => (
-                                                <Space size="middle">
-                                                    <div>{index + 1}</div>
-                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
+                                                <Space key={index} size="small" style={{ marginTop: -5, marginBottom: -5 }}>
+                                                    <div style={{ backgroundColor: this.renderColor(index + 1), color: 'white', width: 25, textAlign: 'center', borderRadius: 2 }}>{index + 1}</div>
+                                                    <Button type="link" onClick={() => { backToTop(); this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
                                                 </Space>
                                             )}
                                         />
                                     </Table>
 
-                                    <Button onClick={() => {
+                                    <Button type="primary" style={{ borderRadius: 30, height: 30, marginTop: 10 }} onClick={() => {
                                         let timer
                                         //设置定时器
                                         var osTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -178,21 +193,22 @@ export default class Home extends Component {
                                         this.props.history.push("/top-popular")
                                     }}>
                                         更多
-                                </Button>
+                                    </Button>
 
-                                </Card>
-                                <Card>
+                                </div>
+                                <div className="top-board">
 
 
 
-                                    <Table pagination={false} dataSource={this.state.highRateMovieList.slice(0,5)}>
+                                    <Table size="small" pagination={false} dataSource={this.state.highRateMovieList.slice(0, 5)}>
                                         <column
                                             title="评分榜"
                                             key="action"
+
                                             render={(text, record, index) => (
-                                                <Space size="middle">
-                                                    <div>{index + 1}</div>
-                                                    <Button type="link" onClick={() => { this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
+                                                <Space key={index} size="small" style={{ marginTop: -5, marginBottom: -5 }}>
+                                                    <div style={{ backgroundColor: this.renderColor(index + 1), color: 'white', width: 25, textAlign: 'center', borderRadius: 2 }}>{index + 1}</div>
+                                                    <Button type="link" onClick={() => { backToTop(); this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
                                                 </Space>
                                             )}
                                         />
@@ -200,7 +216,7 @@ export default class Home extends Component {
                                     </Table>
 
 
-                                    <Button onClick={() => {
+                                    <Button type="primary" style={{ borderRadius: 30, height: 30, marginTop: 10 }} onClick={() => {
                                         let timer
                                         //设置定时器
                                         var osTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -219,8 +235,8 @@ export default class Home extends Component {
                                         this.props.history.push("/top-rating")
                                     }}>
                                         更多
-                            </Button>
-                                </Card>
+                                        </Button>
+                                </div>
                             </Affix>
                         </div>
 

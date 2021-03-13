@@ -17,7 +17,7 @@ class MySider extends Component {
             currentGenreId: 1,
             id: 1,
             isGenre: false,
-            genres:[],
+            genres: [],
         }
 
     }
@@ -25,10 +25,10 @@ class MySider extends Component {
 
         console.log("begin");
         axios({
-            url:address_offline_rec+'/getTypes',
-            method:'GET'
+            url: address_offline_rec + '/getTypes',
+            method: 'GET'
         }).then(res => {
-            this.setState({genres:res.data.data})
+            this.setState({ genres: res.data.data })
         });
 
 
@@ -66,7 +66,7 @@ class MySider extends Component {
                 <Affix offsetTop={80}>
                     <div >
                         <div style={{ width: 200, fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>分类</div>
-                        <>
+                        < div style={{ height: 500, overflowY: 'scroll', overflowX: 'hidden' }}>
                             {this.state.genres.map((item, index) => {
 
                                 return <div key={index} className={this.renderItemClassName(item.typeId)} onClick={() => {
@@ -90,11 +90,11 @@ class MySider extends Component {
                                     {item.typeName}
                                 </div>
                             })}
-                        </>
+                        </div>
                     </div>
                     <div style={{ textAlign: 'center', marginTop: 10, }}>Copyright ©2021 <br /><span style={{ fontWeight: 'bold' }}>MovieRecommender</span></div>
                 </Affix>
-            
+
             </div>
         )
     }

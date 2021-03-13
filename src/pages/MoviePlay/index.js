@@ -1,4 +1,4 @@
-import { Button, Rate, Card, Affix, Row, Col, Input, Divider, message } from 'antd';
+import { Button, Rate, Card, Affix, Row, Col, Input, Divider, message, Space, Table } from 'antd';
 import React, { Component } from 'react'
 import "./style.css";
 import { Player } from "video-react";
@@ -7,7 +7,7 @@ import MovieBoard from '../Home/MovieBoard';
 import Avatar from 'antd/lib/avatar/avatar';
 import axios from 'axios';
 import { address_movie, address_offline_rec, address_rating, address_user, address_recommend } from '../../utils/api';
-import { num } from '../../utils/utils';
+import { backToTop, num } from '../../utils/utils';
 import { getUsername } from '../../utils/auth';
 import moment from 'moment';
 const desc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
@@ -22,6 +22,7 @@ export default class MoviePlay extends Component {
                 typeList: [],
             },
             userid: "",
+            top_popular: []
         }
         this.data = {
             image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
@@ -70,6 +71,7 @@ export default class MoviePlay extends Component {
 
             },
         ];
+
         this.comments = [
             {
                 id: 1,
@@ -104,6 +106,20 @@ export default class MoviePlay extends Component {
 
         ]
     }
+    renderColor(rate) {
+
+        if (rate === 1) {
+            return "#FF183E"
+        } else if (rate === 2) {
+            return "#FF5C38"
+        } else if (rate === 3) {
+            return "#FFB821"
+        }
+        else {
+            return '#7F7F8C'
+        }
+
+    }
     getData(id) {
         // console.log(this.state.id);
         axios({
@@ -137,21 +153,32 @@ export default class MoviePlay extends Component {
                 username: getUsername()
             }
         }).then(res => {
-            console.log(res.data.data);
+            let userid = res.data.data
+            console.log(userid);
             this.setState({
-                userid: res.data.data
+                userid: userid
             })
             axios({
                 url: address_recommend + "/recommend/getMovie",
                 method: "get",
                 params: {
-                    userid: this.state.userid
+                    userid: userid
                 }
-            }).then(res=>{
-                console.log(res);
+            }).then(res => {
+                console.log(res.data);
             })
         })
-     
+
+        axios(
+            {
+                url: address_movie + '/movie/getPopularMovieList',
+                method: "get"
+            }
+        ).then(res => {
+            let popular = res.data.data
+            this.setState({ top_popular: popular })
+        })
+
     }
     handleChange = value => {
 
@@ -227,7 +254,10 @@ export default class MoviePlay extends Component {
                             <div style={{ color: 'white', fontSize: 20, padding: "10px 20px" }}>同类电影推荐</div>
                             <div className="movie-same-recommend-list">
                                 {this.state.similarList.map((item, index) => {
-                                    return <div className="movie-same-recommend-list-item" key={index}>
+                                    return <div className="movie-same-recommend-list-item" key={index} onClick={()=>{
+                                        backToTop();
+                                        this.props.history.push('/movie/'+item.movieId)
+                                    }}>
                                         <img height={80} style={{ borderRadius: 3 }} src={item.poster_url} alt={item.title} />
                                         <div style={{ marginLeft: 10 }}>
                                             <div className="movie-same-recommend-list-item-name" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</div>
@@ -279,11 +309,43 @@ export default class MoviePlay extends Component {
                         </div>
                     </div>
                     <Affix offsetTop={80}>
-                        <Card title="热播榜 " style={{ width: 300, height: 500 }}>
-                            <Button onClick={() => { this.props.history.push("/top-popular") }}>
+                        <div className="top-board">
+                            <Table size="small" pagination={false} dataSource={this.state.top_popular.slice(0, 10)}>
+
+                                <column
+                                    title="热播榜"
+                                    key="action"
+                                    render={(text, record, index) => (
+                                        <Space key={index} size="small" style={{ marginTop: -5, marginBottom: -5 }}>
+                                            <div style={{ backgroundColor: this.renderColor(index + 1), color: 'white', width: 25, textAlign: 'center', borderRadius: 2 }}>{index + 1}</div>
+                                            <Button type="link" onClick={() => { backToTop(); this.props.history.push('/movie/' + record.movieid) }}>{record.title}</Button>
+                                        </Space>
+                                    )}
+                                />
+                            </Table>
+
+                            <Button type="primary" style={{ borderRadius: 30, height: 30, marginTop: 10 }} onClick={() => {
+                                let timer
+                                //设置定时器
+                                var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+                                var ispeed = -osTop / 20;
+                                timer = setInterval(function () {
+                                    //获取滚动条距离顶部高度
+                                    var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+
+                                    document.documentElement.scrollTop = document.body.scrollTop = osTop + ispeed;
+                                    //到达顶部，清除定时器
+                                    if (osTop === 0) {
+                                        clearInterval(timer);
+                                    };
+                                }, 10);
+                                this.props.history.push("/top-popular")
+                            }}>
                                 更多
-                            </Button>
-                        </Card>
+                                    </Button>
+
+                        </div>
                     </Affix>
                 </div>
 

@@ -7,7 +7,7 @@ import Headroom from 'react-headroom';
 import { withRouter } from 'react-router';
 import { clearToken, isLogin, setToken, getUsername } from '../../utils/auth';
 import axios from 'axios';
-import { address_user } from '../../utils/api';
+import { address_movie, address_user } from '../../utils/api';
 const { Header, } = Layout;
 
 
@@ -18,50 +18,10 @@ class MyHeader extends Component {
             visible: false,
             username: "",
             password: "",
-            content: ""
+            content: "",
+            top_popular:[]
         }
-        this.topPopular = [
-            {
-                id: 1,
-                name: '海底总动员',
-            },
-            {
-                id: 2,
-                name: '海底总动员',
-            },
-            {
-                id: 3,
-                name: '海底总动员',
-            },
-            {
-                id: 4,
-                name: '海底总动员',
-            },
-            {
-                id: 5,
-                name: '海底总动员',
-            },
-            {
-                id: 6,
-                name: '海底总动员',
-            },
-            {
-                id: 7,
-                name: '海底总动员',
-            },
-            {
-                id: 8,
-                name: '海底总动员',
-            },
-            {
-                id: 9,
-                name: '海底总动员',
-            },
-            {
-                id: 10,
-                name: '海底总动员',
-            }
-        ]
+     
         this.menu = () => {
             if (isLogin()) {
                 return (
@@ -113,6 +73,17 @@ class MyHeader extends Component {
         };
 
     }
+    componentDidMount(){
+        axios(
+            {
+                url: address_movie + '/movie/getPopularMovieList',
+                method: "get"
+            }
+        ).then(res => {
+            let popular = res.data.data
+            this.setState({ top_popular: popular })
+        })
+    }
     renderColor(rate) {
 
         if (rate === 1) {
@@ -132,11 +103,11 @@ class MyHeader extends Component {
         let _this = this
         return (<Menu>
             <Divider orientation="left">热播榜</Divider>
-            {_this.topPopular.map((item, index) => {
-                return <Menu.Item key={index} onClick={() => { this.props.history.push("/movie/" + item.id) }}>
+            {_this.state.top_popular.map((item, index) => {
+                return <Menu.Item key={index} onClick={() => { this.props.history.push("/movie/" + item.movieid) }}>
                     <div style={{ display: 'flex' }}>
                         <div style={{ backgroundColor: this.renderColor(index + 1), color: 'white', width: 25, textAlign: 'center', borderRadius: 2 }}>{index + 1}</div>
-                        <div style={{ marginLeft: 10, fontSize: 15, letterSpacing: 1 }}>{item.name}</div>
+                        <div style={{ marginLeft: 10, fontSize: 15, letterSpacing: 1 }}>{item.title}</div>
                     </div>
 
                 </Menu.Item>

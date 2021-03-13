@@ -3,6 +3,7 @@ import MovieList from '../../components/MovieList'
 import "./style.css"
 import axios from 'axios'
 import { address_movie } from '../../utils/api'
+import { Divider } from 'antd'
 export default class TopPopular extends Component {
 
     constructor(props) {
@@ -29,7 +30,10 @@ export default class TopPopular extends Component {
     render() {
         return (
             <div>
-                <h1 className="title"> 评分榜</h1>
+                   <div style={{ textAlign: 'center',fontSize:46 ,marginTop:50}}>
+                    评分榜
+                </div>
+                <Divider/>
                 <MovieList  movieList={this.state.movieList}>
                 </MovieList>
             </div>

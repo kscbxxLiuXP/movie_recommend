@@ -6,6 +6,7 @@ import MovieBoard from '../Home/MovieBoard';
 import SimilarBoard from '../../components/SimilarBoard';
 import axios from 'axios';
 import { address_movie, address_offline_rec } from '../../utils/api';
+import { backToTop } from '../../utils/utils';
 
 export default class Movie extends Component {
     constructor(props) {
@@ -140,7 +141,7 @@ export default class Movie extends Component {
                                 }) : "加载中"}
                             </div>
                         </div>
-                        <div className="movie-display-button" onClick={() => { this.props.history.push('/movieplay/' + this.state.id) }}>
+                        <div className="movie-display-button" onClick={() => { backToTop(); this.props.history.push('/movieplay/' + this.state.id) }}>
                             <PlayCircleFilled style={{ marginRight: 10 }} />立即播放
                     </div>
                     </div>
