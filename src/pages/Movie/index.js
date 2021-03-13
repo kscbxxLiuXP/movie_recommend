@@ -76,7 +76,7 @@ export default class Movie extends Component {
                     <div className="movie-detail-wrapper">
                         <div className="movie-detail-info">
                             <div className="movie-detail-info-name">{this.state.detail.name}</div>
-                            <div className="movie-detail-info-year">{this.state.detail.year}</div>
+                            <div className="movie-detail-info-year"><span style={{fontSize:18}}>年份:</span>{this.state.detail.year.substr(1)}</div>
                             <div className="movie-detail-info-time-and-rate">
 
                                 <div >
