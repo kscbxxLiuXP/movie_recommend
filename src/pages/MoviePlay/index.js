@@ -10,6 +10,7 @@ import { address_movie, address_offline_rec, address_rating, address_user, addre
 import { backToTop, num } from '../../utils/utils';
 import { getUsername } from '../../utils/auth';
 import moment from 'moment';
+import MovieBoardNew from '../../components/MovieBoard-new';
 const desc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 export default class MoviePlay extends Component {
     constructor(props) {
@@ -22,7 +23,8 @@ export default class MoviePlay extends Component {
                 typeList: [],
             },
             userid: "",
-            top_popular: []
+            top_popular: [],
+            recommendList: [],
         }
         this.data = {
             image_url: "https://www.themoviedb.org//t/p/w300_and_h450_bestv2/2Z19YpRxntcEQZN02NWWoxbGmAL.jpg",
@@ -165,7 +167,11 @@ export default class MoviePlay extends Component {
                     userid: userid
                 }
             }).then(res => {
-                console.log(res.data);
+
+                this.setState({
+                    recommendList:res.data.data
+                })
+                console.log(res);
             })
         })
 
@@ -254,9 +260,9 @@ export default class MoviePlay extends Component {
                             <div style={{ color: 'white', fontSize: 20, padding: "10px 20px" }}>同类电影推荐</div>
                             <div className="movie-same-recommend-list">
                                 {this.state.similarList.map((item, index) => {
-                                    return <div className="movie-same-recommend-list-item" key={index} onClick={()=>{
+                                    return <div className="movie-same-recommend-list-item" key={index} onClick={() => {
                                         backToTop();
-                                        this.props.history.push('/movie/'+item.movieId)
+                                        this.props.history.push('/movie/' + item.movieId)
                                     }}>
                                         <img height={80} style={{ borderRadius: 3 }} src={item.poster_url} alt={item.title} />
                                         <div style={{ marginLeft: 10 }}>
@@ -274,7 +280,7 @@ export default class MoviePlay extends Component {
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: "30px 50px" }}>
                     <div >
                         <div>
-                            <MovieBoard subtitle="1" title="为你推荐" movieList={this.movieList} url="/top-popular" />
+                            <MovieBoardNew subtitle="1" title="为你推荐" movieList={this.state.recommendList} url="/top-popular" />
                         </div>
                         <div>
                             <div style={{ fontSize: 28, marginTop: 20 }}>
