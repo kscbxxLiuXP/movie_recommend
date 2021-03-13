@@ -112,9 +112,9 @@ export default class Result extends Component {
                                             </Col>
                                         })
                                     }
-                                    <Tooltip title="清空选项">
-                                        <Button type="dashed" shape="circle" icon={<CloseOutlined />} />
-                                    </Tooltip>
+                                    <Col span={4}>
+                                        <Radio value="-1">清空筛选</Radio>
+                                    </Col>
                                 </Row>
 
                             </Radio.Group>
@@ -139,6 +139,9 @@ export default class Result extends Component {
                                     </Col>
                                     <Col span={6}>
                                         <Radio value="6">更早</Radio>
+                                    </Col>
+                                    <Col span={6}>
+                                        <Radio value="0">清空筛选</Radio>
                                     </Col>
                                 </Row>
                             </Radio.Group>
